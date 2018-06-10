@@ -5,10 +5,77 @@
 	<parent>
 		<groupId>com.estafet.microservices.scrum</groupId>
 		<artifactId>microservices-scrum-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.4</version>
 	</parent>
 	<artifactId>microservices-scrum-parent-db</artifactId>
 	<packaging>pom</packaging>
+
+	<profiles>
+		<profile>
+			<id>db</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<version>3.6.1</version>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/${microservice}</url>
+							<username>postgres</username>
+							<password>welcome1</password>
+							<outputChangeLogFile>${basedir}/src/main/resources/db-changelogs/db-changelog.xml</outputChangeLogFile>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generateChangeLog</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<version>3.4.1</version>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/${microservice}</url>
+							<username>postgres</username>
+							<password>welcome1</password>
+							<changeLogFile>${basedir}/src/main/resources/db-changelogs/db-changelog-master.xml</changeLogFile>
+							<diffChangeLogFile>${basedir}/src/main/resources/db-changelogs/liquibase-diff-changeLog.xml</diffChangeLogFile>
+							<referenceUrl>hibernate:spring:${entity.package}?dialect=org.hibernate.dialect.PostgreSQLDialect</referenceUrl>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.liquibase.ext</groupId>
+								<artifactId>liquibase-hibernate4</artifactId>
+								<version>3.5</version>
+							</dependency>
+							<dependency>
+								<groupId>org.springframework</groupId>
+								<artifactId>spring-beans</artifactId>
+								<version>4.1.7.RELEASE</version>
+							</dependency>
+							<dependency>
+								<groupId>org.springframework.data</groupId>
+								<artifactId>spring-data-jpa</artifactId>
+								<version>1.7.3.RELEASE</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<goals>
+									<goal>diff</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<resources>
@@ -18,82 +85,6 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://postgresql.prod.svc:5432/${microservice}</url>
-					<username>postgres</username>
-					<password>welcome1</password>
-					<changeLogFile>liquibase/db-changelog-master.xml</changeLogFile>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>update</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>		
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/${microservice}</url>
-					<username>postgres</username>
-					<password>welcome1</password>
-					<outputChangeLogFile>liquibase/db-changelog.xml</outputChangeLogFile>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generateChangeLog</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.4.1</version>
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/${microservice}</url>
-					<username>postgres</username>
-					<password>welcome1</password>
-					<changeLogFile>liquibase/db-changelog-master.xml</changeLogFile>
-					<diffChangeLogFile>liquibase/liquibase-diff-changeLog.xml</diffChangeLogFile>
-					<referenceUrl>hibernate:spring:${entity.package}?dialect=org.hibernate.dialect.PostgreSQLDialect</referenceUrl>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.liquibase.ext</groupId>
-						<artifactId>liquibase-hibernate4</artifactId>
-						<version>3.5</version>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-beans</artifactId>
-						<version>4.1.7.RELEASE</version>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework.data</groupId>
-						<artifactId>spring-data-jpa</artifactId>
-						<version>1.7.3.RELEASE</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<goals>
-							<goal>diff</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -153,6 +144,10 @@
 			<artifactId>spring-websocket</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>		
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
@@ -169,6 +164,11 @@
 			<artifactId>spring-test-dbunit</artifactId>
 			<version>1.2.0</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.estafet.microservices.scrum</groupId>
+			<artifactId>microservices-scrum-data-lib</artifactId>
+			<version>1.0.4</version>
 		</dependency>
 	</dependencies>
 
