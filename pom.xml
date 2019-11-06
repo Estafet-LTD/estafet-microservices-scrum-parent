@@ -12,23 +12,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.7.RELEASE</version>
 	</parent>
-
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>http://www.opensource.org/licenses/mit-license.php</url>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<name>Dennis Williams</name>
-			<email>dennis.williams@estafet.com</email>
-			<organization>Estafet</organization>
-			<organizationUrl>http://www.estafet.com</organizationUrl>
-		</developer>
-	</developers>
-
+	
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -61,44 +45,6 @@
 							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 							<autoReleaseAfterClose>true</autoReleaseAfterClose>
 						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.5</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
