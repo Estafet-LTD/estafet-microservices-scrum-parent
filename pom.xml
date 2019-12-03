@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.estafet.microservices.scrum</groupId>
 	<artifactId>microservices-scrum-parent</artifactId>
-	<version>1.0.6-SNAPSHOT</version>
+	<version>1.0.6</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -209,7 +209,7 @@
 		<connection>scm:git:https://github.com/Estafet-LTD/estafet-microservices-scrum-parent.git</connection>
 		<developerConnection>scm:git:https://github.com/Estafet-LTD/estafet-microservices-scrum-parent.git</developerConnection>
 		<url>https://github.com/Estafet-LTD/estafet-microservices-scrum-parent</url>
-		<tag>HEAD</tag>
+		<tag>microservices-scrum-parent-1.0.6</tag>
 	</scm>
 
 	<name>Parent pom for microservices scrum</name>
