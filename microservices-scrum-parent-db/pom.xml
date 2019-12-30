@@ -157,7 +157,7 @@
 						</dependencies>
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://postgresql.${project}.svc:5432/prod-${microservice}</url>
+							<url>jdbc:postgresql://postgresql.${project}.svc:5432/${project}-${microservice}</url>
 							<username>postgres</username>
 							<password>welcome1</password>
 						</configuration>
@@ -172,7 +172,7 @@
 									<!-- need another database to create the targeted one -->
 									<url>jdbc:postgresql://postgresql.${project}.svc:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "prod-${microservice}"</sqlCommand>
+									<sqlCommand>CREATE DATABASE "${project}-${microservice}"</sqlCommand>
 									<!-- ignore error when database is not available -->
 									<onError>continue</onError>
 								</configuration>
